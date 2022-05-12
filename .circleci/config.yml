@@ -16,9 +16,9 @@ jobs:
       - image: circleci/node:13.8.0
 
     steps:
-      - run: echo "saving hello world in file" > %CD%/output.txt    
+      - run: echo "saving hello world in file" > ~/output.txt    
       - persist_to_wokspace:
-          root: %CD%
+          root: ~/
           paths:
             - output.txt
 
@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: %CD%
+          at: ~/
       - run: cat %CD%/output.txt             
 
 

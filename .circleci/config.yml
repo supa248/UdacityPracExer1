@@ -16,7 +16,7 @@ orbs:
   # Declare a dependency on the welcome-orb
   say-hello-workflow: circleci/welcome-orb@0.4.1
 
-job:
+jobs:
 
   my_pipeline_id:
     docker:

@@ -5,31 +5,25 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
+commands:
+    print_pipeline_id:
+      description: "printing circle ci workflow id"
+      
+      steps:
+        - run: echo ${CIRCLE_WORKFLOW_ID}
+
 orbs:
   # Declare a dependency on the welcome-orb
   say-hello-workflow: circleci/welcome-orb@0.4.1
 
-jobs:
-  
-  save_hello_world_output:
+job:
+
+  my_pipeline_id:
     docker:
       - image: circleci/node:13.8.0
 
     steps:
-      - run: echo "saving hello world in file" > ~/output.txt    
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
-
-  print_output_file:
-    docker:
-      - image: circleci/node:13.8.0
-
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/output.txt             
+      - print_pipeline_id  
 
 
 # Invoke jobs via workflows
@@ -37,9 +31,5 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - save_hello_world_output
-      - print_output_file:
-
-          requires:
-            - save_hello_world_output
+      - my_pipeline_id
 

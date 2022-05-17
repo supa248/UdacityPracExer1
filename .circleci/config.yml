@@ -20,12 +20,16 @@ commands:
 
 jobs:
 
-  my_pipeline_id:
+  my_job:
     docker:
       - image: circleci/node:13.8.0
 
     steps:
-      - print_pipeline_id  
+      - run: exit 1
+      - run:
+          name: on_error
+          command: echo "Hello Error!"
+          when: on_fail 
 
 
 # Invoke jobs via workflows
@@ -33,5 +37,5 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - my_pipeline_id
+      - my_job
 
